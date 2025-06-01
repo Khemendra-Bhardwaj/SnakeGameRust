@@ -75,22 +75,26 @@ impl <'a>  GameEngine <'a> {
                     if head.x  == self.food.pos.x && head.y == self.food.pos.y {
                         is_grown = true;
                         self.score += 1;
+                        self.board.board[head.x as usize ][head.y  as usize ] = '*';
                         self.find_and_place_food();
                     }
                     
                     // move the snake
                     self.snake.movement(self.last_direction, is_grown );
                     
-
-                    // check is snake is dead   
-                    if self.is_game_over(){
-                        println!("Game Over ! ");
-                        break; 
-                    }
-
+                    // print the board 
                     self.place_snake_on_board();
                     self.board.print_board();
                     self.snake.print_snake();
+
+
+                    // check is snake is dead   
+                    if self.is_game_over(){
+                        println!("Game Over ! , score {}", self.score);
+                        break; 
+                    }
+
+                    
 
             // frame update visible to user 
             thread::sleep(Duration::from_millis(1000) );
